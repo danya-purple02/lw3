@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\prog\PSU\logics\lw3\p3\p3\main.cpp(8,16): warning C4091: typedef : пропускается слева от "node", когда ни одна переменная не объявлена
+C:\prog\PSU\logics\lw3\p3\p3\main.cpp(203,1): warning C4715: find_struct: значение возвращается не при всех путях выполнения
+  p3.vcxproj -> C:\prog\PSU\logics\lw3\p3\x64\Debug\p3.exe
