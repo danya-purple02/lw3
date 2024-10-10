@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\prog\PSU\logics\lw3\p3_2\p3_2\main.cpp(8,16): warning C4091: typedef : пропускается слева от "queue", когда ни одна переменная не объявлена
+  p3_2.vcxproj -> C:\prog\PSU\logics\lw3\p3_2\x64\Debug\p3_2.exe
