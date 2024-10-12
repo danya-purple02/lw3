@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\prog\PSU\logics\lw3\p3_3\p3_3\main.cpp(8,16): warning C4091: typedef : пропускается слева от "stack", когда ни одна переменная не объявлена
+  p3_3.vcxproj -> C:\prog\PSU\logics\lw3\p3_3\x64\Debug\p3_3.exe

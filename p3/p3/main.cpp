@@ -5,7 +5,7 @@
 
 using namespace std;
 
-typedef struct node 
+typedef struct node
 {
 	int priority;
 	char information[40];
@@ -16,45 +16,45 @@ struct node* head = NULL, * last = NULL, * f = NULL, * tmp = NULL;
 struct node* make_struct();
 void add_to_list();
 struct node* find_struct();
-void del_struct(char* name);
+void del_struct(int prior);
 void review_struct();
 
-int main() 
+int main()
 {
 	int choise = 0;
-	while (1) 
+	while (1)
 	{
 		cout << "choose action" << endl;
 		cout << "review struct - 1 |  add element - 2  | delete element - 3" << endl;
 		cout << "find element - 4  | exit programm - 5 |" << endl;
 		cin >> choise;
 		cout << endl;
-		switch (choise) 
+		switch (choise)
 		{
-		case 1: 
+		case 1:
 		{
 			review_struct();
 			cout << "---------------------" << endl << endl;
 			continue;
 		}
-		case 2: 
+		case 2:
 		{
 			add_to_list();
 			cout << "---------------------" << endl << endl;
 			continue;
 		}
-		case 3: 
+		case 3:
 		{
-			char name[20] = { 0 };
-			cout << "enter element name: ";
-			cin >> name;
+			int prior = 0;
+			cout << "enter element priority: ";
+			cin >> prior;
 			cout << endl;
-			del_struct(name);
+			del_struct(prior);
 			cout << "done!" << endl;
 			cout << "---------------------" << endl << endl;
 			continue;
 		}
-		case 4: 
+		case 4:
 		{
 			struct node* p = find_struct();
 			cout << "priority: " << p->priority << endl << "name: " << p->information << endl;
@@ -66,10 +66,10 @@ int main()
 			return 0;
 		}
 		}
-	} 
+	}
 }
 
-struct node* make_struct() 
+struct node* make_struct()
 {
 	struct node* new_str = NULL;
 
@@ -93,11 +93,11 @@ struct node* make_struct()
 	return new_str;
 }
 
-void add_to_list() 
+void add_to_list()
 {
 	struct node* p = NULL;
 	p = make_struct();
-	if (head == NULL && p != NULL) 
+	if (head == NULL && p != NULL)
 	{
 		head = p;
 		last = p;
@@ -106,22 +106,22 @@ void add_to_list()
 	{
 		struct node* curr = head;
 		struct node* prev = NULL;
-		while (curr != NULL && curr->priority < p->priority) 
+		while (curr != NULL && curr->priority < p->priority)
 		{
 			prev = curr;
 			curr = curr->next;
 		}
-		if (prev == NULL) 
+		if (prev == NULL)
 		{
 			p->next = head;
 			head = p;
 		}
-		else 
+		else
 		{
 			prev->next = p;
 			p->next = curr;
 		}
-		if (p->next == NULL) 
+		if (p->next == NULL)
 		{
 			last = p;
 		}
@@ -149,63 +149,64 @@ struct node* find_struct()
 	int choise_2 = 0;
 	cout << "find by name - 1 | find by priority - 2" << endl;
 	cin >> choise_2;
-	
-	switch (choise_2) 
+
+	switch (choise_2)
 	{
-		case 1: 
+	case 1:
+	{
+		char name[20] = { 0 };
+		cout << "enter search value: ";
+		cin >> name;
+		cout << endl;
+		struct node* struc = head;
+		if (head == NULL)
 		{
-			char name[20] = { 0 };
-			cout << "enter search value: ";
-			cin >> name;
-			cout << endl;
-			struct node* struc = head;
-			if (head == NULL)
-			{
-				cout << "list is empty" << endl;
-				return NULL;
-			}
-			while (struc)
-			{
-				if (strcmp(name, struc->information) == 0)
-				{
-					return struc;
-				}
-				struc = struc->next;
-			}
-			cout << "element not found" << endl;
+			cout << "list is empty" << endl;
 			return NULL;
 		}
-		case 2: 
+		while (struc)
 		{
-			int prior = 0;
-			cout << "enter search value: ";
-			cin >> prior;
-			cout << endl;
-			struct node* struc = head;
-			if (head == NULL)
+			if (strcmp(name, struc->information) == 0)
 			{
-				cout << "list is empty" << endl;
-				return NULL;
+				return struc;
 			}
-			while (struc)
-			{
-				if (prior == struc->priority)
-				{
-					return struc;
-				}
-				struc = struc->next;
-			}
-			cout << "element not found" << endl;
-			return NULL;
+			struc = struc->next;
 		}
+		cout << "element not found" << endl;
+		return NULL;
 	}
-	
+	case 2:
+	{
+		int prior = 0;
+		cout << "enter search value: ";
+		cin >> prior;
+		cout << endl;
+		struct node* struc = head;
+		if (head == NULL)
+		{
+			cout << "list is empty" << endl;
+			return NULL;
+		}
+		while (struc)
+		{
+			if (prior == struc->priority)
+			{
+				return struc;
+			}
+			struc = struc->next;
+		}
+		cout << "element not found" << endl;
+		return NULL;
+	}
+	}
+
 }
 
-void del_struct(char* name)
+void del_struct(int prior)
 {
 	struct node* struc = head;
 	struct node* prev = head;
+	struct node* tmp = NULL;
 	int flag = 0;
 
 	if (head == NULL)
@@ -214,7 +215,7 @@ void del_struct(char* name)
 		return;
 	}
 
-	if (strcmp(name, struc->information) == 0) 
+	if (prior == struc->priority)
 	{
 		flag = 1;
 		head = struc->next;
@@ -227,22 +228,32 @@ void del_struct(char* name)
 		struc = struc->next;
 	}
 
-	while (struc) 
+	while (struc)
 	{
-		if (strcmp(name, struc->information) == 0) 
+		if (prior == struc->priority && struc != head)
 		{
 			flag = 1;
-			if (struc->next) 
+			if (struc->next)
 			{
 				prev->next = struc->next;
 				free(struc);
 				struc = prev->next;
 			}
-			else	
+			else
 			{
 				prev->next = NULL;
 				free(struc);
 				return;
+			}
+		}
+		else if (prior == struc->priority && struc == head)
+		{
+			flag = 1;
+			if (struc->next)
+			{
+				head = struc->next;
+				free(struc);
+				struc = head;
 			}
 		}
 		else
@@ -251,7 +262,7 @@ void del_struct(char* name)
 			struc = struc->next;
 		}
 	}
-	if (flag == 0)	
+	if (flag == 0)
 	{
 		cout << "element not found" << endl;
 		return;
